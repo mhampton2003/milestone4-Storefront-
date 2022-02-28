@@ -1,16 +1,75 @@
 package storefront;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InventoryManager {
-	//tracks products in the inventory
-	ArrayList<Product> inventory = new ArrayList<Product>();
-	//initializes inventory
-	Weapon sword = new Weapon("Mighty Sword", 100.0, "is the sharpest in the land", 50, 4);
-	Weapon bow = new Weapon("Longbow", 100.0, "is a beginner's Elvin bow that can shoot enemies from a distance", 120, 2);
-	Armor helmet = new Armor("Basic Helmet", "Basic", 30.0, "prevents minor concussions", 60, 12);
-	Armor chestplate = new Armor("Basic Chestplate", "Basic", 75.0, "prevents bruising", 80, 10);
-	Health health = new Health("Healing Potion", "heals 75% of the player's health", 30.0, 120);
+	
+	/**
+	 * creates file and writes the JSON of products to it
+	 * @param filename The name of the file to be written to
+	 * @param car The Product that is being written
+	 * @param append Allows more text to be written
+	 */
+	public void saveToFile(String filename, Product p, boolean append) {
+		PrintWriter pw;
+		try {
+			//create a file File to write
+			File file = new File(filename);
+			FileWriter fw = new FileWriter(file, append);
+			pw = new PrintWriter(fw);
+			
+			//write car as JSON
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(p);
+			pw.println(json);
+			
+			//cleanup printwriter
+			pw.close();
+		}
+		//prints IOException message
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * reads JSON from file and returns as Products
+	 * @param filename The file that is being read from
+	 * @return cars The arraylist that contains the products
+	 */
+	public ArrayList<Product> readFromFile(String filename){
+		ArrayList<Product> inventory = new ArrayList<Product>();
+		try {
+			//open the file File to read
+			File file = new File(filename);
+			Scanner s = new Scanner(file);
+			
+			//create list of Cars by reading JSON file
+			while(s.hasNext()) {
+				//read a string of JSON and convert to a Car
+				String json = s.nextLine();
+				ObjectMapper objectMapper = new ObjectMapper();
+				Product product = objectMapper.readValue(json, Product.class);
+				inventory.add(product);
+			}
+			
+			//cleanup scanner
+			s.close();
+		}
+		//prints IOException message
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		return inventory;
+	}
 	
 	/**
 	 * removes an item from the inventory's stock
@@ -33,18 +92,18 @@ public class InventoryManager {
 	}
 	
 	/**
-	 * initializes and returns the inventory
+	 * returns the inventory
 	 */
 	public void returnInventory() {
-		//initializes inventory
-		inventory.add(sword);
-		inventory.add(bow);
-		inventory.add(helmet);
-		inventory.add(chestplate);
-		inventory.add(health);
-		//prints out each item on a new line
-		for (int i = 0; i < inventory.size(); ++i) {
-			System.out.println(inventory.get(i) + " - " + inventory.get(i).getQuantity());
+		//creates arrayList of items from JSON
+		ArrayList<Product> itemsList = readFromFile("inventory.txt");
+		for (Product p : itemsList) {
+			//prints each product with commas between each attribute
+			String text = p.getName() + "," + p.getDescription() + "," +
+					Integer.toString(p.getQuantity()) + "," +
+					Double.toString(p.getPrice()) + "," +
+					Double.toString(p.getDurability());
+			System.out.println(text);
 		}
 	}
 }
