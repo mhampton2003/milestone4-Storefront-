@@ -2,6 +2,8 @@ package storefront;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class StoreFront {
@@ -23,18 +25,43 @@ public class StoreFront {
 		Scanner s = new Scanner(file);
 		
 		//initializes inventory from JSON file
-		String json = s.nextLine();
-		Weapon sword = objectMapper.readValue(json, Weapon.class);
-		json = s.nextLine();
-		Weapon bow = objectMapper.readValue(json, Weapon.class);
-		json = s.nextLine();
-		Armor helmet = objectMapper.readValue(json, Armor.class);
-		json = s.nextLine();
-		Armor chestplate = objectMapper.readValue(json, Armor.class);
-		json = s.nextLine();
-		Health health = objectMapper.readValue(json, Health.class);
-		s.close();
+		//String json = s.nextLine();
+		//Weapon sword = objectMapper.readValue(json, Weapon.class);
+		//json = s.nextLine();
+		//Weapon bow = objectMapper.readValue(json, Weapon.class);
+		//json = s.nextLine();
+		//Armor helmet = objectMapper.readValue(json, Armor.class);
+		//json = s.nextLine();
+		//Armor chestplate = objectMapper.readValue(json, Armor.class);
+		//json = s.nextLine();
+		//Health health = objectMapper.readValue(json, Health.class);
+		//s.close();
+		Weapon sword = new Weapon("Mighty Sword", "is the sharpest in the land", 50, 4);
+		Weapon bow = new Weapon("Longbow", "This beginner's Elvin bow can shoot enemies from a distance", 120, 2);
+		Armor helmet = new Armor("Basic Helmet", "prevents minor concussions", 60, 12);
+		Armor chestplate = new Armor("Basic Chestplate", "prevents bruising", 80, 10);
+		Health health = new Health("Healing Potion", "heals 75% of the player's health", 30.0, 120);
 		
+		im.saveToFile("inventory.txt", sword, true);
+		im.saveToFile("inventory.txt", bow, true);
+		im.saveToFile("inventory.txt", helmet, true);
+		im.saveToFile("inventory.txt", chestplate, true);
+		im.saveToFile("inventory.txt", health, true);
+		
+		
+		im.readFromFile("inventory.txt").get(0).setQuantity(im.readFromFile("inventory.txt").get(0).getQuantity() - 2);
+		System.out.println(im.readFromFile("inventory.txt").get(0).getQuantity());
+		
+		String json = s.nextLine();
+		//Product product = objectMapper.readValue(json, Product.class);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(json);
+		JsonNode statusNode = jsonNode.get("quantity");
+		String statusValue = statusNode.textValue();
+		System.out.println(statusValue);
+		
+		/*
 		//initializes store and allows user to return back to the main menu
 		System.out.println("Hello! Welcome to Fallen Kingdom Artefacts");
 		
@@ -50,26 +77,26 @@ public class StoreFront {
 			//weapons
 			if (choice == 1) {
 				while (true) {
-					System.out.println("Ah a weapon! Good choice. We have a " + sword.getName() + " and a " + bow.getName());
-					System.out.println("If you'd like to learn more about the " + sword.getName() + " press 1");
-					System.out.println("If you'd like to learn more about the " + bow.getName() + " press 2");
+					System.out.println("Ah a weapon! Good choice. We have a " + im.readFromFile("inventory.txt").get(0).getName() + " and a " + im.readFromFile("inventory.txt").get(1).getName());
+					System.out.println("If you'd like to learn more about the " + im.readFromFile("inventory.txt").get(0).getName() + " press 1");
+					System.out.println("If you'd like to learn more about the " + im.readFromFile("inventory.txt").get(1).getName() + " press 2");
 					System.out.println("To go back press 0");
 					int weaponChoice = scnr.nextInt();
 					//information about sword
 					if (weaponChoice == 1) {
-						System.out.println("This " + sword.getName() + " " + sword.getDescription());
-						System.out.println("Durability: " + sword.getDurability());
-						System.out.println("Price: " + sword.getPrice() + " shards");
+						System.out.println("This " + im.readFromFile("inventory.txt").get(0).getName() + " " + im.readFromFile("inventory.txt").get(0).getDescription());
+						//System.out.println("Durability: " + im.readFromFile("inventory.txt").get(0).getDurability());
+						System.out.println("Price: " + im.readFromFile("inventory.txt").get(0).getPrice() + " shards");
 						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
 						//offers chance to buy
 						int purchaseChoice = scnr.nextInt();
 						if (purchaseChoice == 1) {
-							System.out.println("How many would you like to buy? We have " + sword.getQuantity() + " in stock");
+							System.out.println("How many would you like to buy? We have " + im.readFromFile("inventory.txt").get(0).getQuantity() + " in stock");
 							int userQuantity = scnr.nextInt();
 							//if the desired amount is less than stock add to cart and remove from inventory
-							if ((userQuantity <= sword.getQuantity()) && (userQuantity > 0)) {
-								sc.cartAdd(sword, userQuantity);
-								im.itemRemove(sword, userQuantity);
+							if ((userQuantity <= im.readFromFile("inventory.txt").get(0).getQuantity()) && (userQuantity > 0)) {
+								sc.cartAdd(im.readFromFile("inventory.txt").get(0), userQuantity);
+								im.itemRemove(im.readFromFile("inventory.txt").get(0), userQuantity);
 								//user can continue shopping
 								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
 								int continueChoice = scnr.nextInt();
@@ -100,7 +127,7 @@ public class StoreFront {
 								break;
 							}
 							//prints error if user tries to buy more than is available
-							else if (userQuantity > sword.getQuantity()) {
+							else if (userQuantity > im.readFromFile("inventory.txt").get(0).getQuantity()) {
 								System.out.println("Your requested quantity was too large");
 							}
 							else {
@@ -117,19 +144,19 @@ public class StoreFront {
 					}
 					//information about bow
 					else if(weaponChoice == 2) {
-						System.out.println("This " + bow.getName() + " " + bow.getDescription());
-						System.out.println("Durability: " + bow.getDurability());
-						System.out.println("Price: " + bow.getPrice() + " shards");
+						System.out.println("This " + im.readFromFile("inventory.txt").get(1).getName() + " " + im.readFromFile("inventory.txt").get(1).getDescription());
+						//System.out.println("Durability: " + im.readFromFile("inventory.txt").get(1).getDurability());
+						System.out.println("Price: " + im.readFromFile("inventory.txt").get(1).getPrice() + " shards");
 						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
 						//offers chance to buy
 						int purchaseChoice = scnr.nextInt();
 						if (purchaseChoice == 1) {
-							System.out.println("How many would you like to buy? We have " + bow.getQuantity() + " in stock");
+							System.out.println("How many would you like to buy? We have " + im.readFromFile("inventory.txt").get(1).getQuantity() + " in stock");
 							int userQuantity = scnr.nextInt();
 							//if the desired amount is less than stock add to cart and remove from inventory
-							if ((userQuantity <= bow.getQuantity()) && (userQuantity > 0)) {
-								sc.cartAdd(bow, userQuantity);
-								im.itemRemove(bow, userQuantity);
+							if ((userQuantity <= im.readFromFile("inventory.txt").get(1).getQuantity()) && (userQuantity > 0)) {
+								sc.cartAdd(im.readFromFile("inventory.txt").get(1), userQuantity);
+								im.itemRemove(im.readFromFile("inventory.txt").get(1), userQuantity);
 								//user can continue shopping
 								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
 								int continueChoice = scnr.nextInt();
@@ -160,7 +187,7 @@ public class StoreFront {
 								break;
 							}
 							//prints error if user tries to buy more than is available
-							else if (userQuantity > bow.getQuantity()) {
+							else if (userQuantity > im.readFromFile("inventory.txt").get(1).getQuantity()) {
 								System.out.println("Your requested quantity was too large");
 							}
 							else {
@@ -187,26 +214,26 @@ public class StoreFront {
 			//armor
 			if (choice == 2) {
 				while (true) {
-					System.out.println("Armor! Defense is always good. We have a " + helmet.getName() + " and a " + chestplate.getName());
-					System.out.println("If you'd like to learn more about the " + helmet.getName() + " press 1");
-					System.out.println("If you'd like to learn more about the " + chestplate.getName() + " press 2");
+					System.out.println("Armor! Defense is always good. We have a " + im.readFromFile("inventory.txt").get(2).getName() + " and a " + im.readFromFile("inventory.txt").get(3).getName());
+					System.out.println("If you'd like to learn more about the " + im.readFromFile("inventory.txt").get(2).getName() + " press 1");
+					System.out.println("If you'd like to learn more about the " + im.readFromFile("inventory.txt").get(3).getName() + " press 2");
 					System.out.println("To go back press 0");
 					int armorChoice = scnr.nextInt();
 					//information about helmet
 					if (armorChoice == 1) {
-						System.out.println("This " + helmet.getName() + " " + helmet.getDescription());
-						System.out.println("Durability: " + helmet.getDurability());
-						System.out.println("Price: " + helmet.getPrice() + " shards");
+						System.out.println("This " + im.readFromFile("inventory.txt").get(2).getName() + " " + im.readFromFile("inventory.txt").get(2).getDescription());
+						//System.out.println("Durability: " + im.readFromFile("inventory.txt").get(2).getDurability());
+						System.out.println("Price: " + im.readFromFile("inventory.txt").get(2).getPrice() + " shards");
 						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
-							System.out.println("How many would you like to buy? We have " + helmet.getQuantity() + " in stock");
+							System.out.println("How many would you like to buy? We have " + im.readFromFile("inventory.txt").get(2).getQuantity() + " in stock");
 							int userQuantity = scnr.nextInt();
 							//if the desired amount is less than stock add to cart and remove from inventory
-							if ((userQuantity <= helmet.getQuantity()) && (userQuantity > 0)) {
-								sc.cartAdd(helmet, userQuantity);
-								im.itemRemove(helmet, userQuantity);
+							if ((userQuantity <= im.readFromFile("inventory.txt").get(2).getQuantity()) && (userQuantity > 0)) {
+								sc.cartAdd(im.readFromFile("inventory.txt").get(2), userQuantity);
+								im.itemRemove(im.readFromFile("inventory.txt").get(2), userQuantity);
 								//user can continue shopping
 								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
 								int continueChoice = scnr.nextInt();
@@ -236,7 +263,7 @@ public class StoreFront {
 								}
 							}
 							//prints error if user tries to buy more than is available
-							else if (userQuantity > helmet.getQuantity()) {
+							else if (userQuantity > im.readFromFile("inventory.txt").get(2).getQuantity()) {
 								System.out.println("Your requested quantity was too large");
 							}
 							else {
@@ -253,20 +280,20 @@ public class StoreFront {
 					}
 					//information about chestplate
 					else if (armorChoice == 2) {
-						System.out.println("This " + chestplate.getName() + " " + chestplate.getDescription());
-						System.out.println("Type: " + chestplate.getType());
-						System.out.println("Durability: " + chestplate.getDurability());
-						System.out.println("Price: " + chestplate.getPrice() + " shards");
+						System.out.println("This " + im.readFromFile("inventory.txt").get(3).getName() + " " + im.readFromFile("inventory.txt").get(3).getDescription());
+						//System.out.println("Type: " + im.readFromFile("inventory.txt").get(3).getType());
+						//System.out.println("Durability: " + im.readFromFile("inventory.txt").get(3).getDurability());
+						System.out.println("Price: " + im.readFromFile("inventory.txt").get(3).getPrice() + " shards");
 						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
-							System.out.println("How many would you like to buy? We have " + chestplate.getQuantity() + " in stock");
+							System.out.println("How many would you like to buy? We have " + im.readFromFile("inventory.txt").get(3).getQuantity() + " in stock");
 							int userQuantity = scnr.nextInt();
 							//if the desired amount is less than stock add to cart and remove from inventory
-							if ((userQuantity <= chestplate.getQuantity()) && (userQuantity > 0)) {
-								sc.cartAdd(chestplate, userQuantity);
-								im.itemRemove(chestplate, userQuantity);
+							if ((userQuantity <= im.readFromFile("inventory.txt").get(3).getQuantity()) && (userQuantity > 0)) {
+								sc.cartAdd(im.readFromFile("inventory.txt").get(3), userQuantity);
+								im.itemRemove(im.readFromFile("inventory.txt").get(3), userQuantity);
 								//user can continue shopping
 								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
 								int continueChoice = scnr.nextInt();
@@ -296,7 +323,7 @@ public class StoreFront {
 								}
 							}
 							//prints error if user tries to buy more than is available
-							else if (userQuantity > chestplate.getQuantity()) {
+							else if (userQuantity > im.readFromFile("inventory.txt").get(3).getQuantity()) {
 								System.out.println("Your requested quantity was too large");
 							}
 							else {
@@ -323,24 +350,24 @@ public class StoreFront {
 			//health
 			if (choice == 3) {
 				while (true) {
-					System.out.println("You look rough. A health potion is a good idea. We have a " + health.getName());
-					System.out.println("If you'd like to learn more about the " + health.getName() + " press 1");
+					System.out.println("You look rough. A health potion is a good idea. We have a " + im.readFromFile("inventory.txt").get(4).getName());
+					System.out.println("If you'd like to learn more about the " + im.readFromFile("inventory.txt").get(4).getName() + " press 1");
 					System.out.println("To go back press 0");
 					int healthChoice = scnr.nextInt();
 					//information about health
 					if (healthChoice == 1) {
-						System.out.println("This " + health.getName() + " " + health.getDescription());
-						System.out.println("The " + health.getName() + " costs " + health.getPrice() + " shards");
+						System.out.println("This " + im.readFromFile("inventory.txt").get(4).getName() + " " + im.readFromFile("inventory.txt").get(4).getDescription());
+						System.out.println("The " + im.readFromFile("inventory.txt").get(4).getName() + " costs " + im.readFromFile("inventory.txt").get(4).getPrice() + " shards");
 						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
-							System.out.println("How many would you like to buy? We have " + health.getQuantity() + " in stock");
+							System.out.println("How many would you like to buy? We have " + im.readFromFile("inventory.txt").get(4).getQuantity() + " in stock");
 							int userQuantity = scnr.nextInt();
 							//if the desired amount is less than stock add to cart and remove from inventory
-							if ((userQuantity <= health.getQuantity()) && (userQuantity > 0)) {
-								sc.cartAdd(health, userQuantity);
-								im.itemRemove(health, userQuantity);
+							if ((userQuantity <= im.readFromFile("inventory.txt").get(4).getQuantity()) && (userQuantity > 0)) {
+								sc.cartAdd(im.readFromFile("inventory.txt").get(4), userQuantity);
+								im.itemRemove(im.readFromFile("inventory.txt").get(4), userQuantity);
 								//user can continue shopping
 								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
 								int continueChoice = scnr.nextInt();
@@ -370,7 +397,7 @@ public class StoreFront {
 								}
 							}
 							//prints error if user tries to buy more than is available
-							else if (userQuantity > health.getQuantity()) {
+							else if (userQuantity > im.readFromFile("inventory.txt").get(4).getQuantity()) {
 								System.out.println("Your requested quantity was too large");
 							}
 							else {
@@ -399,6 +426,6 @@ public class StoreFront {
 				break;
 			}
 		}
-		
+		*/
 	}
 }

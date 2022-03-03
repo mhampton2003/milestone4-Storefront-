@@ -51,9 +51,9 @@ public class InventoryManager {
 			File file = new File(filename);
 			Scanner s = new Scanner(file);
 			
-			//create list of Cars by reading JSON file
+			//create list of Products by reading JSON file
 			while(s.hasNext()) {
-				//read a string of JSON and convert to a Car
+				//read a string of JSON and convert to a Product
 				String json = s.nextLine();
 				ObjectMapper objectMapper = new ObjectMapper();
 				Product product = objectMapper.readValue(json, Product.class);
@@ -78,7 +78,8 @@ public class InventoryManager {
 	 */
 	public void itemRemove(Product p, int userQuantity) {
 		//removes desired quantity from the product's stock
-		p.quantity = p.quantity - userQuantity;
+		p.setQuantity(p.getQuantity() - userQuantity);
+		//p.quantity = p.quantity - userQuantity;
 	}
 	
 	/**

@@ -16,10 +16,10 @@ public class Armor extends Product {
 	 * @param p price Creates the price
 	 * @param q quantity Creates the quantity
 	 */
-	protected Armor(String n, String t, double h, String d, double p, int q) {
+	protected Armor(String n,/* String t, double h,*/ String d, double p, int q) {
 		name = n;
-		type = t;
-		durability = h;
+		//type = t;
+		//durability = h;
 		description = d;
 		price = p;
 		quantity = q;

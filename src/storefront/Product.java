@@ -50,11 +50,11 @@ public class Product implements Comparable<Product>{
 	public String toString() {
 		return this.getName();
 	}
-	
+	/*
 	/**
 	 * gets type of product
 	 * @return type an int representing the type
-	 */
+	 
 	public String getType() {
 		return type;
 	}
@@ -62,7 +62,7 @@ public class Product implements Comparable<Product>{
 	/**
 	 * sets the type of product
 	 * @param type an int containing the product's type
-	 */
+	 
 	public void setType(String type) {
 		this.type = type;
 	}
@@ -70,7 +70,7 @@ public class Product implements Comparable<Product>{
 	/**
 	 * gets the durability of the product
 	 * @return durability a double representing the durability
-	 */
+	 *
 	public double getDurability() {
 		return durability;
 	}
@@ -78,11 +78,11 @@ public class Product implements Comparable<Product>{
 	/**
 	 * sets the product's durability
 	 * @param durability a double containing the product's durability
-	 */
+	 *
 	public void setDurability(double durability) {
 		this.durability = durability;
 	}
-
+*/
 	/**
 	 * gets the product's name
 	 * @return name A string representing the product's name
