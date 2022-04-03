@@ -47,6 +47,7 @@ public class ShoppingCart {
 		//totalItems -= quantity; - to be used later?
 		//totalCost -= p.price * quantity; - to be used later?
 		System.out.println(quantity + " " + p.getName() + "s were removed from the cart");
+		count--;
 	}
 	
 	/**

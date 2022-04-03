@@ -1,16 +1,135 @@
 package storefront;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+import java.net.*;
+import java.io.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InventoryManager {
+	private Socket clientSocket;
+	private PrintWriter out;
+	private BufferedReader in;
+	
+	/**
+	 * Connect to the remote Server on the specified IP address and Port
+	 * 
+	 * @param ip Remote IP Address to connect to
+	 * @param port Remote Port to connect to
+	 * @throws UnknownHostException Thrown if network resolution exception
+	 * @throws IOException Thrown if anything bad happens from any of the networking classes
+	 */
+	public void start(String ip, int port) throws UnknownHostException, IOException {
+		//connect to the Remote Server on the specified IP Address and Port
+		clientSocket = new Socket(ip, port);
+		
+		//create some input and output network buffers to communicate back and forth with the Server
+		out = new PrintWriter(clientSocket.getOutputStream(), true);
+		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	}
+	
+	/**
+	 * Send a message to the Server
+	 * 
+	 * @param msg Message to send
+	 * @return Response back from the Server 
+	 * @throws IOException Thrown if anything bad happens from any of the networking classes
+	 */
+	public String sendMessage(String msg) throws IOException {
+		//send/print a message to the Server with a terminating line feed
+		out.println(msg);
+		
+		//return the response from the Server
+		return in.readLine();
+	}
+	
+	/**
+	 * cleanup logic to close all the network connections
+	 * 
+	 * @throws IOException Thrown if anything bad happens from the networking classes
+	 */
+	public void cleanup() throws IOException {
+		//close all input and output network buffers and sockets
+		in.close();
+		out.close();
+		clientSocket.close();
+	}
+	
+	/**
+	 * entry method for the Server application
+	 * 
+	 * @param args Takes in any number of values
+	 * @throws IOException Thrown if anything bad happens from any of the networking classes
+	 * @throws InterruptedException Thrown if anything bad happens while the thread is running
+	 */
+	public static void main(String args[]) throws IOException, InterruptedException {
+		//create a Client and connect to the Remote Server on the specified IP Address and Port
+		InventoryManager client = new InventoryManager();
+		Scanner scnr = new Scanner(System.in);
+		client.start("127.0.0.1", 6666);
+		
+		Boolean cont = true;
+		//while the user still wants to access the inventory:
+		while (cont) {
+			System.out.println("[R] Return inventory\n"
+					+ "[U] Update products");
+			String input = scnr.next();
+			
+			//return inventory
+			if (input.equals("R")) {
+				client.sendMessage(client.returnInventory());
+				
+			}
+			//add a product to the inventory
+			else if (input.equals("U")) {
+				System.out.println("[1] Add product");
+				int prodChoice = scnr.nextInt();
+				if (prodChoice == 1) {
+					Product p = new Product();
+					System.out.println("Type in the attributes of the product you want to add");
+					System.out.print("Enter name of product: ");
+					String name = scnr.next();
+					p.setName(name);
+					System.out.print("Enter description of product: ");
+					String descript = scnr.next();
+					p.setDescription(descript);
+					System.out.print("Enter price of product: ");
+					int price = scnr.nextInt();
+					p.setPrice(price);
+					System.out.print("Enter quantity of product: ");
+					int quantity = scnr.nextInt();
+					p.setQuantity(quantity);
+					System.out.print("Enter the type of product: ");
+					String type = scnr.next();
+					p.setType(type);
+					client.saveToFile("inventory.txt", p, true);
+				}
+			}
+			else {
+				System.out.println("An error occured");
+			}
+			//if the user wants to do something else: repeats
+			System.out.println("Would you like to do anything else?\n"
+					+ "[1] Yes "
+					+ "[2] No");
+			int contChoice = scnr.nextInt();
+			if (contChoice == 1) {
+				continue;
+			}
+			else {
+				cont = false;
+				break;
+			}
+			
+		}
+		
+		client.cleanup();
+		scnr.close();
+	}
+	
+	
 	
 	/**
 	 * Sorts the products in ascending order by price
@@ -208,17 +327,18 @@ public class InventoryManager {
 	}
 	
 	/**
-	 * returns the inventory
+	 * returns the inventory 
 	 */
-	public void returnInventory() {
+	public String returnInventory() {
 		//creates arrayList of items from JSON
 		ArrayList<Product> itemsList = readFromFile("inventory.txt");
+		String text = "";
 		for (Product p : itemsList) {
 			//prints each product with commas between each attribute
-			String text = p.getName() + "," + p.getDescription() + "," +
+			text = text + p.getName() + "," + p.getDescription() + "," +
 					Integer.toString(p.getQuantity()) + "," +
-					Double.toString(p.getPrice()) + ",";
-			System.out.println(text);
+					Double.toString(p.getPrice()) + "\n";
 		}
+		return text;
 	}
 }

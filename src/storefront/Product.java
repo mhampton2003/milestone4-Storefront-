@@ -6,7 +6,6 @@ public class Product implements Comparable<Product>{
 	protected String description;
 	protected double price;
 	protected int quantity;
-	protected double durability;
 	
 	/**
 	 * Product default constructor
@@ -20,11 +19,12 @@ public class Product implements Comparable<Product>{
 	 * @param p price Creates the price
 	 * @param q quantity Creates the quantity
 	 */
-	public Product(String n, String d, double p, int q) {
+	public Product(String n, String d, double p, int q, String t) {
 		name = n;
 		description = d;
 		price = p;
 		quantity = q;
+		type = t;
 	}
 	
 	/**
@@ -50,11 +50,11 @@ public class Product implements Comparable<Product>{
 	public String toString() {
 		return this.getName();
 	}
-	/*
+	
 	/**
 	 * gets type of product
 	 * @return type an int representing the type
-	 
+	 */
 	public String getType() {
 		return type;
 	}
@@ -62,27 +62,11 @@ public class Product implements Comparable<Product>{
 	/**
 	 * sets the type of product
 	 * @param type an int containing the product's type
-	 
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	/**
-	 * gets the durability of the product
-	 * @return durability a double representing the durability
-	 *
-	public double getDurability() {
-		return durability;
-	}
-
-	/**
-	 * sets the product's durability
-	 * @param durability a double containing the product's durability
-	 *
-	public void setDurability(double durability) {
-		this.durability = durability;
-	}
-*/
+	
 	/**
 	 * gets the product's name
 	 * @return name A string representing the product's name

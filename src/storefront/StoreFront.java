@@ -14,9 +14,8 @@ public class StoreFront {
 	 */
 	public static void main(String[] args) throws IOException{
 		Scanner scnr = new Scanner(System.in);
-		//initializes Inventory
+		//initializes Inventory and Cart
 		InventoryManager im = new InventoryManager();
-		//Initializes Cart
 		ShoppingCart sc = new ShoppingCart();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -35,14 +34,6 @@ public class StoreFront {
 		json = s.nextLine();
 		Health health = objectMapper.readValue(json, Health.class);
 		s.close();
-		
-		im.ascendingPrice();
-		System.out.println("");
-		im.descendingPrice();
-		System.out.println("");
-		im.ascendingName();
-		System.out.println("");
-		im.descendingName();
 		
 		/*
 		Weapon sword = new Weapon("Mighty Sword", "is the sharpest in the land", 50, 4);
@@ -63,27 +54,34 @@ public class StoreFront {
 		
 		while (true) {
 			System.out.println("Anything interest you?");
-			System.out.println("Press 1 for weapons");
-			System.out.println("Press 2 for armor");
-			System.out.println("Press 3 for health");
-			System.out.println("Press 0 to leave");
+			System.out.println("------------------------------");
+			System.out.println("[1] Weapons");
+			System.out.println("[2] Armor");
+			System.out.println("[3] Health");
+			System.out.println("[0] Exit");
+			System.out.println("------------------------------");
 			
 			int choice = scnr.nextInt();
-
+			
 			//weapons
 			if (choice == 1) {
 				while (true) {
-					System.out.println("Ah a weapon! Good choice. We have a " + sword.getName() + " and a " + bow.getName());
-					System.out.println("If you'd like to learn more about the " + sword.getName() + " press 1");
-					System.out.println("If you'd like to learn more about the " + bow.getName() + " press 2");
-					System.out.println("To go back press 0");
+					System.out.println("A weapon! Good choice. We have a " + sword.getName() + " and a " + bow.getName());
+					System.out.println("------------------------------");
+					System.out.println("[1] To learn more about the " + sword.getName());
+					System.out.println("[2] To learn more about the " + bow.getName());
+					System.out.println("[0] To go back");
+					System.out.println("------------------------------");
 					int weaponChoice = scnr.nextInt();
 					//information about sword
 					if (weaponChoice == 1) {
 						System.out.println("This " + sword.getName() + " " + sword.getDescription());
 						//System.out.println("Durability: " + sword.getDurability());
 						System.out.println("Price: " + sword.getPrice() + " shards");
-						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
+						System.out.println("Would you like to make a purchase?");
+						System.out.println("------------------------------");
+						System.out.println("[1] Yes\n[2] No");
+						System.out.println("------------------------------");
 						//offers chance to buy
 						int purchaseChoice = scnr.nextInt();
 						if (purchaseChoice == 1) {
@@ -94,14 +92,20 @@ public class StoreFront {
 								sc.cartAdd(sword, userQuantity);
 								im.itemRemove(sword, userQuantity);
 								//user can continue shopping
-								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
+								System.out.println("Would you like to continue shopping?");
+								System.out.println("------------------------------");
+								System.out.println("[1] Yes\n[2] No");
+								System.out.println("------------------------------");
 								int continueChoice = scnr.nextInt();
 								if (continueChoice == 1) {
 									//continue shopping - goes back a menu
 								}
 								//if user wants to purchase items the cart is emptied
 								else if (continueChoice == 2) {
-									System.out.println("Would you like to purchase the items in your cart? Type 1 to buy all or type 2 to buy nothing");
+									System.out.println("Would you like to purchase the items in your cart?");
+									System.out.println("------------------------------");
+									System.out.println("[1] Buy all\n[2] Buy nothing");
+									System.out.println("------------------------------");
 									sc.returnCart();
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
@@ -125,7 +129,12 @@ public class StoreFront {
 							}
 							//prints error if user tries to buy more than is available
 							else if (userQuantity > sword.getQuantity()) {
-								System.out.println("Your requested quantity was too large");
+								if (sword.getQuantity() == 0) {
+									System.out.println("Unfortunately we have no more " + sword.getName() + "s in stock");
+								}
+								else {
+									System.out.println("Your requested quantity was too large");
+								}
 							}
 							else {
 								System.out.println("An error occurred");
@@ -140,11 +149,14 @@ public class StoreFront {
 						}
 					}
 					//information about bow
-					else if(weaponChoice == 2) {
+					else if (weaponChoice == 2) {
 						System.out.println("This " + bow.getName() + " " + bow.getDescription());
 						//System.out.println("Durability: " + bow.getDurability());
 						System.out.println("Price: " + bow.getPrice() + " shards");
-						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
+						System.out.println("Would you like to make a purchase?");
+						System.out.println("------------------------------");
+						System.out.println("[1] Yes\n[2] No");
+						System.out.println("------------------------------");
 						//offers chance to buy
 						int purchaseChoice = scnr.nextInt();
 						if (purchaseChoice == 1) {
@@ -155,14 +167,20 @@ public class StoreFront {
 								sc.cartAdd(bow, userQuantity);
 								im.itemRemove(bow, userQuantity);
 								//user can continue shopping
-								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
+								System.out.println("Would you like to continue shopping?");
+								System.out.println("------------------------------");
+								System.out.println("[1] Yes\n[2] No");
+								System.out.println("------------------------------");
 								int continueChoice = scnr.nextInt();
 								if (continueChoice == 1) {
 									//continue shopping - goes back a menu
 								}
 								//if user wants to purchase items the cart is emptied
 								else if (continueChoice == 2) {
-									System.out.println("Would you like to purchase the items in your cart? Type 1 to buy all or type 2 to buy nothing");
+									System.out.println("Would you like to purchase the items in your cart?");
+									System.out.println("------------------------------");
+									System.out.println("[1] Buy all\n[2] Buy nothing");
+									System.out.println("------------------------------");
 									sc.returnCart();
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
@@ -186,7 +204,12 @@ public class StoreFront {
 							}
 							//prints error if user tries to buy more than is available
 							else if (userQuantity > bow.getQuantity()) {
-								System.out.println("Your requested quantity was too large");
+								if (sword.getQuantity() == 0) {
+									System.out.println("Unfortunately we have no more " + bow.getName() + "s in stock");
+								}
+								else {
+									System.out.println("Your requested quantity was too large");
+								}
 							}
 							else {
 								System.out.println("An error occurred");
@@ -213,16 +236,21 @@ public class StoreFront {
 			if (choice == 2) {
 				while (true) {
 					System.out.println("Armor! Defense is always good. We have a " + helmet.getName() + " and a " + chestplate.getName());
-					System.out.println("If you'd like to learn more about the " + helmet.getName() + " press 1");
-					System.out.println("If you'd like to learn more about the " + chestplate.getName() + " press 2");
-					System.out.println("To go back press 0");
+					System.out.println("------------------------------");
+					System.out.println("[1] To learn more about the " + helmet.getName());
+					System.out.println("[2] To learn more about the " + chestplate.getName());
+					System.out.println("[0] To go back");
+					System.out.println("------------------------------");
 					int armorChoice = scnr.nextInt();
 					//information about helmet
 					if (armorChoice == 1) {
 						System.out.println("This " + helmet.getName() + " " + helmet.getDescription());
 						//System.out.println("Durability: " + helmet.getDurability());
 						System.out.println("Price: " + helmet.getPrice() + " shards");
-						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
+						System.out.println("Would you like to make a purchase?");
+						System.out.println("------------------------------");
+						System.out.println("[1] Yes\n[2] No");
+						System.out.println("------------------------------");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
@@ -233,14 +261,20 @@ public class StoreFront {
 								sc.cartAdd(helmet, userQuantity);
 								im.itemRemove(helmet, userQuantity);
 								//user can continue shopping
-								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
+								System.out.println("Would you like to continue shopping?");
+								System.out.println("------------------------------");
+								System.out.println("[1] Yes\n[2] No");
+								System.out.println("------------------------------");
 								int continueChoice = scnr.nextInt();
 								if (continueChoice == 1) {
 									//continue shopping - goes back a menu
 								}
 								//if user wants to purchase items the cart is emptied
 								else if (continueChoice == 2) {
-									System.out.println("Would you like to purchase the items in your cart? Type 1 to buy all or type 2 to buy nothing");
+									System.out.println("Would you like to purchase the items in your cart?");
+									System.out.println("------------------------------");
+									System.out.println("[1] Buy all\n[2] Buy nothing");
+									System.out.println("------------------------------");
 									sc.returnCart();
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
@@ -263,7 +297,12 @@ public class StoreFront {
 							}
 							//prints error if user tries to buy more than is available
 							else if (userQuantity > helmet.getQuantity()) {
-								System.out.println("Your requested quantity was too large");
+								if (sword.getQuantity() == 0) {
+									System.out.println("Unfortunately we have no more " + helmet.getName() + "s in stock");
+								}
+								else {
+									System.out.println("Your requested quantity was too large");
+								}
 							}
 							else {
 								System.out.println("An error occurred");
@@ -283,7 +322,10 @@ public class StoreFront {
 						//System.out.println("Type: " + chestplate.getType());
 						//System.out.println("Durability: " + chestplate.getDurability());
 						System.out.println("Price: " + chestplate.getPrice() + " shards");
-						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
+						System.out.println("Would you like to make a purchase?");
+						System.out.println("------------------------------");
+						System.out.println("[1] Yes\n[2] No");
+						System.out.println("------------------------------");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
@@ -294,14 +336,20 @@ public class StoreFront {
 								sc.cartAdd(chestplate, userQuantity);
 								im.itemRemove(chestplate, userQuantity);
 								//user can continue shopping
-								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
+								System.out.println("Would you like to continue shopping?");
+								System.out.println("------------------------------");
+								System.out.println("[1] Yes\n[2] No");
+								System.out.println("------------------------------");
 								int continueChoice = scnr.nextInt();
 								if (continueChoice == 1) {
 									//continue shopping - goes back a menu
 								}
 								//if user wants to purchase items the cart is emptied
 								else if (continueChoice == 2) {
-									System.out.println("Would you like to purchase the items in your cart? Type 1 to buy all or type 2 to buy nothing");
+									System.out.println("Would you like to purchase the items in your cart?");
+									System.out.println("------------------------------");
+									System.out.println("[1] Buy all\n[2] Buy nothing");
+									System.out.println("------------------------------");
 									sc.returnCart();
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
@@ -324,7 +372,12 @@ public class StoreFront {
 							}
 							//prints error if user tries to buy more than is available
 							else if (userQuantity > chestplate.getQuantity()) {
-								System.out.println("Your requested quantity was too large");
+								if (sword.getQuantity() == 0) {
+									System.out.println("Unfortunately we have no more " + chestplate.getName() + "s in stock");
+								}
+								else {
+									System.out.println("Your requested quantity was too large");
+								}
 							}
 							else {
 								System.out.println("An error occurred");
@@ -351,14 +404,19 @@ public class StoreFront {
 			if (choice == 3) {
 				while (true) {
 					System.out.println("You look rough. A health potion is a good idea. We have a " + health.getName());
-					System.out.println("If you'd like to learn more about the " + health.getName() + " press 1");
-					System.out.println("To go back press 0");
+					System.out.println("------------------------------");
+					System.out.println("[1] To learn more about the " + health.getName());
+					System.out.println("[0] To go back");
+					System.out.println("------------------------------");
 					int healthChoice = scnr.nextInt();
 					//information about health
 					if (healthChoice == 1) {
 						System.out.println("This " + health.getName() + " " + health.getDescription());
 						System.out.println("The " + health.getName() + " costs " + health.getPrice() + " shards");
-						System.out.println("Would you like to make a purchase? Type 1 for yes or 2 for no");
+						System.out.println("Would you like to make a purchase?");
+						System.out.println("------------------------------");
+						System.out.println("[1] Yes\n[2] No");
+						System.out.println("------------------------------");
 						int purchaseChoice = scnr.nextInt();
 						//offers chance to buy
 						if (purchaseChoice == 1) {
@@ -369,14 +427,20 @@ public class StoreFront {
 								sc.cartAdd(health, userQuantity);
 								im.itemRemove(health, userQuantity);
 								//user can continue shopping
-								System.out.println("Would you like to continue shopping? Type 1 for yes or 2 for no");
+								System.out.println("Would you like to continue shopping?");
+								System.out.println("------------------------------");
+								System.out.println("[1] Yes\n[2] No");
+								System.out.println("------------------------------");
 								int continueChoice = scnr.nextInt();
 								if (continueChoice == 1) {
 									//continue shopping - goes back a menu
 								}
 								//if user wants to purchase items the cart is emptied
 								else if (continueChoice == 2) {
-									System.out.println("Would you like to purchase the items in your cart? Type 1 to buy all or type 2 to buy nothing");
+									System.out.println("Would you like to purchase the items in your cart?");
+									System.out.println("------------------------------");
+									System.out.println("[1] Buy all\n[2] Buy nothing");
+									System.out.println("------------------------------");
 									sc.returnCart();
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
@@ -399,7 +463,12 @@ public class StoreFront {
 							}
 							//prints error if user tries to buy more than is available
 							else if (userQuantity > health.getQuantity()) {
-								System.out.println("Your requested quantity was too large");
+								if (sword.getQuantity() == 0) {
+									System.out.println("Unfortunately we have no more " + health.getName() + "s in stock");
+								}
+								else {
+									System.out.println("Your requested quantity was too large");
+								}
 							}
 							else {
 								System.out.println("An error occurred");
@@ -427,6 +496,6 @@ public class StoreFront {
 				break;
 			}
 		}
-	
+		scnr.close();
 	}
 }
