@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShoppingCart {
-	//protected int totalItems; - to be used later?
-	//protected int totalCost; - to be used later?
+	protected double totalCost;
 	protected int count = 1;
 	
 	//tracks items added to the cart
@@ -24,6 +23,9 @@ public class ShoppingCart {
 		//totalItems += quantity; - to be used later?
 		//totalCost += p.price * quantity; - to be used later?
 		System.out.println(quantity + " " + p.getName() + "s were added to the cart");
+		
+		totalCost = totalCost + cart.get(count).getPrice() * quantity;
+		
 		count++;
 
 		System.out.println("");
@@ -42,6 +44,7 @@ public class ShoppingCart {
 			if (cart.get(i) == p) {
 				cart.remove(i);
 				amount.remove(i);
+				totalCost = totalCost - (cart.get(i).getPrice() * amount.get(i));
 			}
 		}
 		//totalItems -= quantity; - to be used later?
@@ -59,6 +62,8 @@ public class ShoppingCart {
 		for (int i = 1; i <= cart.size(); ++i) {
 			System.out.println(cart.get(i).getName() + " - " + amount.get(i));
 		}
+		
+		System.out.println("Total Cost: " + totalCost);
 	}
 	
 	/**
@@ -74,6 +79,7 @@ public class ShoppingCart {
 		//empties cart and amount maps of all contents. resets key count
 		cart.clear();
 		amount.clear();
+		totalCost = 0;
 		count = 1;
 		System.out.println("Your cart was emptied");
 	}

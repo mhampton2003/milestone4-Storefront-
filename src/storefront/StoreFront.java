@@ -110,12 +110,17 @@ public class StoreFront {
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
 										System.out.println("Your purchase was completed successfully");
+										System.out.println("==============================\n");
 										sc.cart.clear();
+										sc.amount.clear();
+										sc.totalCost = 0;
 										sc.count = 1;
 									}
 									//if user doesn't want to purchase items the cart is emptied and stock is returned to inventory
 									else if (cartChoice == 2) {
 										sc.emptyCart();
+										sc.amount.clear();
+										System.out.println("==============================\n");
 									}
 									else {
 										System.out.println("An error occurred");
@@ -185,12 +190,17 @@ public class StoreFront {
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
 										System.out.println("Your purchase was completed successfully");
+										System.out.println("==============================\n");
 										sc.cart.clear();
+										sc.amount.clear();
+										sc.totalCost = 0;
 										sc.count = 1;
 									}
 									//if user doesn't want to purchase items the cart is emptied and stock is returned to inventory
 									else if (cartChoice == 2) {
 										sc.emptyCart();
+										sc.amount.clear();
+										System.out.println("==============================\n");
 									}
 									else {
 										System.out.println("An error occurred");
@@ -279,12 +289,17 @@ public class StoreFront {
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
 										System.out.println("Your purchase was completed successfully");
+										System.out.println("==============================\n");
 										sc.cart.clear();
+										sc.amount.clear();
+										sc.totalCost = 0;
 										sc.count = 1;
 									}
 									//if user doesn't want to purchase items the cart is emptied and stock is returned to inventory
 									else if (cartChoice == 2) {
 										sc.emptyCart();
+										sc.amount.clear();
+										System.out.println("==============================\n");
 									}
 									else {
 										System.out.println("An error occurred");
@@ -354,12 +369,17 @@ public class StoreFront {
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
 										System.out.println("Your purchase was completed successfully");
+										System.out.println("==============================\n");
 										sc.cart.clear();
+										sc.amount.clear();
+										sc.totalCost = 0;
 										sc.count = 1;
 									}
 									//if user doesn't want to purchase items the cart is emptied and stock is returned to inventory
 									else if (cartChoice == 2) {
 										sc.emptyCart();
+										sc.amount.clear();
+										System.out.println("==============================\n");
 									}
 									else {
 										System.out.println("An error occurred");
@@ -445,12 +465,17 @@ public class StoreFront {
 									int cartChoice = scnr.nextInt();
 									if (cartChoice == 1) {
 										System.out.println("Your purchase was completed successfully");
+										System.out.println("==============================\n");
 										sc.cart.clear();
+										sc.amount.clear();
+										sc.totalCost = 0;
 										sc.count = 1;
 									}
 									//if user doesn't want to purchase items the cart is emptied and stock is returned to inventory
 									else if (cartChoice == 2) {
 										sc.emptyCart();
+										sc.amount.clear();
+										System.out.println("==============================\n");
 									}
 									else {
 										System.out.println("An error occurred");
