@@ -14,7 +14,7 @@ public class Health extends Product{
 	 * @param p price Creates the price
 	 * @param q quantity Creates the quantity
 	 */
-	protected Health(String n, String d, double p, int q) {
+	public Health(String n, String d, double p, int q) {
 		name = n;
 		description = d;
 		price = p;

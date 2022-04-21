@@ -14,7 +14,7 @@ public class StoreFront {
 	 */
 	public static void main(String[] args) throws IOException{
 		Scanner scnr = new Scanner(System.in);
-		//initializes Inventory and Cart
+		FileService fs = new FileService();
 		InventoryManager im = new InventoryManager();
 		ShoppingCart sc = new ShoppingCart();
 		
@@ -36,17 +36,17 @@ public class StoreFront {
 		s.close();
 		
 		/*
-		Weapon sword = new Weapon("Mighty Sword", "is the sharpest in the land", 50, 4);
-		Weapon bow = new Weapon("Longbow", "This beginner's Elvin bow can shoot enemies from a distance", 120, 2);
-		Armor helmet = new Armor("Basic Helmet", "prevents minor concussions", 60, 12);
-		Armor chestplate = new Armor("Basic Chestplate", "prevents bruising", 80, 10);
-		Health health = new Health("Healing Potion", "heals 75% of the player's health", 30.0, 120);
+		Weapon sword1 = new Weapon("Mighty Sword", "is the sharpest in the land", 50, 4);
+		Weapon bow1 = new Weapon("Longbow", "This beginner's Elvin bow can shoot enemies from a distance", 120, 2);
+		Armor helmet1 = new Armor("Basic Helmet", "prevents minor concussions", 60, 12);
+		Armor chestplate1 = new Armor("Basic Chestplate", "prevents bruising", 80, 10);
+		Health health1 = new Health("Healing Potion", "heals 75% of the player's health", 30.0, 120);
 		
-		im.saveToFile("inventory.txt", sword, true);
-		im.saveToFile("inventory.txt", bow, true);
-		im.saveToFile("inventory.txt", helmet, true);
-		im.saveToFile("inventory.txt", chestplate, true);
-		im.saveToFile("inventory.txt", health, true);
+		fs.saveToFile("inventory.txt", sword, true);
+		fs.saveToFile("inventory.txt", bow, true);
+		fs.saveToFile("inventory.txt", helmet, true);
+		fs.saveToFile("inventory.txt", chestplate, true);
+		fs.saveToFile("inventory.txt", health, true);
 		*/
 		
 		//initializes store and allows user to return back to the main menu

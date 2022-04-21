@@ -3,3 +3,9 @@
 {"name":"Basic Helmet","description":"prevents minor concussions","price":60.0,"quantity":12,"type":"armor"}
 {"name":"Basic Chestplate","description":"prevents bruising","price":80.0,"quantity":10,"type":"armor"}
 {"name":"Healing Potion","description":"heals 75% of the player's health","price":30.0,"quantity":120,"type":"potion"}
+{"name":"Mighty Sword","type":"weapon","description":"is the sharpest in the land","price":50.0,"quantity":4}
+{"name":"Longbow","type":"weapon","description":"is a beginner's Elvin bow that can shoot enemies from a distance","price":120.0,"quantity":2}
+{"name":"Basic Helmet","type":"armor","description":"prevents minor concussions","price":60.0,"quantity":12}
+{"name":"Basic Chestplate","type":"armor","description":"prevents bruising","price":80.0,"quantity":10}
+{"name":"Healing Potion","type":"potion","description":"heals 75% of the player's health","price":30.0,"quantity":120}
+{"name":"gun","type":"weapon","description":"shoot","price":10.0,"quantity":5}

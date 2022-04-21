@@ -10,7 +10,7 @@ public class Product implements Comparable<Product>{
 	/**
 	 * Product default constructor
 	 */
-	protected Product() {}
+	public Product() {}
 	
 	/**
 	 * non-default constructor. Creates a product

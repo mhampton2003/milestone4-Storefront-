@@ -43,6 +43,7 @@ public class AdminService {
 				out.println("OK");
 			}
 		}
+		
 		//exit message that Server is shut down
 		System.out.println("Server is shut down");
 	}

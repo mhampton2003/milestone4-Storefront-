@@ -15,9 +15,8 @@ public class Weapon extends Product {
 	 * @param p price Creates the price
 	 * @param q quantity Creates the quantity
 	 */
-	protected Weapon(String n, /*double h,*/ String d, double p, int q) {
+	public Weapon(String n, String d, double p, int q) {
 		name = n;
-		//durability = h;
 		description = d;
 		price = p;
 		quantity = q;
