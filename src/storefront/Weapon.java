@@ -5,7 +5,7 @@ public class Weapon extends Product {
 	/**
 	 * default weapon constructor
 	 */
-	private Weapon() {}
+	public Weapon() {}
 	
 	/**
 	 * non-default weapon constructor. creates weapon object

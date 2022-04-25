@@ -14,7 +14,6 @@ public class StoreFront {
 	 */
 	public static void main(String[] args) throws IOException{
 		Scanner scnr = new Scanner(System.in);
-		FileService fs = new FileService();
 		InventoryManager im = new InventoryManager();
 		ShoppingCart sc = new ShoppingCart();
 		
@@ -50,7 +49,7 @@ public class StoreFront {
 		*/
 		
 		//initializes store and allows user to return back to the main menu
-		System.out.println("Hello! Welcome to Fallen Kingdom Artefacts");
+		System.out.println("Hello! Welcome to Fallen Kingdom Artifacts");
 		
 		while (true) {
 			System.out.println("Anything interest you?");

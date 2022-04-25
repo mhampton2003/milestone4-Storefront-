@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShoppingCart {
-	protected double totalCost;
-	protected int count = 1;
+	public double totalCost;
+	public int count = 1;
 	
 	//tracks items added to the cart
 	Map<Integer, Product> cart = new HashMap<Integer, Product>();
@@ -20,8 +20,6 @@ public class ShoppingCart {
 	public void cartAdd(Product p, int quantity) {
 		cart.put(count, p); // adds product to cart
 		amount.put(count, quantity); // adds amount that is being purchased to amount array
-		//totalItems += quantity; - to be used later?
-		//totalCost += p.price * quantity; - to be used later?
 		System.out.println(quantity + " " + p.getName() + "s were added to the cart");
 		
 		totalCost = totalCost + cart.get(count).getPrice() * quantity;
@@ -76,7 +74,7 @@ public class ShoppingCart {
 		for (int i = 1; i <= cart.size(); ++i) {
 			cart.get(i).setQuantity(cart.get(i).getQuantity() + amount.get(i));
 		}
-		//empties cart and amount maps of all contents. resets key count
+		//empties cart and amount maps of all contents. resets key count + total cost
 		cart.clear();
 		amount.clear();
 		totalCost = 0;

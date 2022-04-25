@@ -5,7 +5,7 @@ public class Health extends Product{
 	/**
 	 * Default Health constructor
 	 */
-	private Health() {}
+	public Health() {}
 	
 	/**
 	 * Non-default health constructor. Creates health object

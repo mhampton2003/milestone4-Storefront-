@@ -14,22 +14,29 @@ public class ShoppingCartTest {
 	public void testCartAdd() {
 		Product p = new Product("product", "prod desc", 1.0, 1, "p");
 		sc.cartAdd(p, 1);
-		assertEquals(2, sc.cart.get(0));
+		assertTrue(sc.totalCost == 1);
+		assertFalse(sc.totalCost == 0);
 	}
 
 	@Test
 	public void testCartRemove() {
-		fail("Not yet implemented");
+		Product p = new Product("product", "prod desc", 1.0, 1, "p");
+		sc.cartRemove(p, 1);
+		assertTrue(sc.totalCost == 0);
+		assertFalse(sc.totalCost == 1);
 	}
 
 	@Test
 	public void testReturnCart() {
-		fail("Not yet implemented");
+		sc.returnCart();
+		assertTrue(sc.totalCost == 0);
+		assertFalse(sc.totalCost == 1);
 	}
 
 	@Test
 	public void testEmptyCart() {
-		fail("Not yet implemented");
+		assertTrue(sc.totalCost == 0);
+		assertTrue(sc.count == 1);
 	}
 
 }

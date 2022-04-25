@@ -10,13 +10,13 @@ import java.util.Scanner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FileService {
+	
 	/**
 	 * creates file and writes the JSON of products to it
 	 * @param filename The name of the file to be written to
 	 * @param p The Product that is being written
 	 * @param append Allows more text to be written
 	 */
-	
 	public void saveToFile(String filename, Product p, boolean append) {
 		PrintWriter pw;
 		try {

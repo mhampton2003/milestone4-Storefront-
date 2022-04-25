@@ -6,8 +6,6 @@ import java.util.Scanner;
 import java.net.*;
 import java.io.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class InventoryManager {
 	public Socket clientSocket;
 	public PrintWriter out;
@@ -42,7 +40,7 @@ public class InventoryManager {
 		out.println(msg);
 		
 		//return the response from the Server
-		System.out.println(in.readLine());
+		//System.out.println(in.readLine());
 		return in.readLine();
 	}
 	
@@ -257,7 +255,6 @@ public class InventoryManager {
 	public void itemRemove(Product p, int userQuantity) {
 		//removes desired quantity from the product's stock
 		p.setQuantity(p.getQuantity() - userQuantity);
-		//p.quantity = p.quantity - userQuantity;
 	}
 	
 	/**
